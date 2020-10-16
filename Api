@@ -1,0 +1,34 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+from flask import Flask
+
+x = []
+y = []
+d = []
+
+page = requests.get("https://tripsguard.com/")
+
+src = page.content
+
+soup = BeautifulSoup(src, 'lxml')
+
+for div in soup.find_all("h4"):
+    x.append(div.text.replace("\t" , "").replace("\n", "").replace("Open", "").replace("Closed for Travel", "").replace("Partially", "").replace("for Travel",""))
+
+    y.append(div.text.replace("\t" , "").replace("\n", "").replace("Denmark","").replace("Thailand","").replace("United Kingdom","").replace("Portugal","").replace("Iceland","").replace("Australia","").replace("United States","").replace("New Zealand","").replace("Mexico","").replace("Turkmenistan","").replace("Samoa","").replace("Idaho (US state)","").replace("South Carolina (US state)","").replace("Venezuela","").replace("Argentina","").replace("Barbados","").replace("Bosnia and Herzegovina","").replace("Pakistan","").replace("Central African Republic","").replace("Greece","").replace("Bahamas","").replace("Vatican City","").replace("North Macedonia","").replace("Singapore","").replace("Comoros","").replace("Lebanon","").replace("Croatia","").replace("Taiwan","").replace("Nepal","").replace("Antigua and Barbuda","").replace("Indonesia","").replace("Tunisia","").replace("Wyoming (US State)","").replace("Lithuania","").replace("Czech Republic","").replace("Mongolia","").replace("Palestine","").replace("Bulgaria","").replace("Namibia","").replace("Liechtenstein","").replace("France","").replace("Eswatini","").replace("New York (US state)","").replace("Mauritius","").replace("Pennsylvania (US state)","").replace("Georgia (US state)","").replace("Italy","").replace("Arkansas (US state)","").replace("Morocco","").replace("New Hampshire (US state)","").replace("Honduras","").replace("India","").replace("Guatemala","").replace("Zimbabwe","").replace("Armenia","").replace("Japan","").replace("Nebraska (US state)","").replace("United Arab Emirates","").replace("Serbia","").replace("Massachusetts (US state)","").replace("Nicaragua","").replace("South Africa","").replace("Iran","").replace("Chad","").replace("Algeria","").replace("Sierra Leone","").replace("Saint Kitts and Nevis","").replace("Austria","").replace("Washington (US state)","").replace("Palau","").replace("Missouri (US state)","").replace("Saint Lucia","").replace("Nigeria","").replace("Angola","").replace("Jordan","").replace("Kiribati","").replace("Uruguay","").replace("El Salvador","").replace("Bhutan","").replace("Monaco","").replace("Illinois (US state)","").replace("Laos","").replace("Cyprus","").replace("Iowa (US state)","").replace("Peru","").replace("Montenegro","").replace("Maine (US state)","").replace("Burundi","").replace("Afghanistan","").replace("Georgia","").replace("Hungary","").replace("North Dakota (US State)","").replace("Delaware (US state)","").replace("Chile","").replace("Switzerland","").replace("Virginia (US state)","").replace("Sri Lanka","").replace("Spain","").replace("Uganda","").replace("Azerbaijan","").replace("Tennessee (US state)","").replace("Bangladesh","").replace("Germany","").replace("South Dakota (US State)","").replace("Egypt","").replace("Malaysia","").replace("Andorra","").replace("Connecticut (US state)","").replace("San Marino","").replace("Saint Vincent and the Grenadines","").replace("Colorado (US state)","").replace("China","").replace("Botswana","").replace("North Carolina (US state)","").replace("Latvia","").replace("Cote d’Ivoire (Ivory Coast)","").replace("IvoryCoast)","").replace("Norway","").replace("Nevada (US state)","").replace("Eritrea","").replace("Puerto Rico","").replace("Ohio (US state)","").replace("Vietnam","").replace("Zambia","").replace("Uzbekistan","").replace("Brazil","").replace("Russia","").replace("Fiji","").replace("Somalia","").replace("Mozambique","").replace("Kuwait","").replace("Paraguay","").replace("Bolivia","").replace("Lesotho","").replace("Louisiana (US state)","").replace("Libya","").replace("Minnesota (US State)","").replace("Belarus","").replace("Ethiopia","").replace("New Jersey (US state)","").replace("Albania","").replace("Kazakhstan","").replace("Mauritania","").replace("Jamaica","").replace("Guinea","").replace("Oklahoma (US state)","").replace("Cameroon","").replace("Sweden","").replace("Maldives","").replace("Slovenia","").replace("Cabo Verde (Cape Verde)","").replace("Gambia","").replace("Turkey","").replace("Bahrain","").replace("Israel","").replace("Grenada","").replace("Benin","").replace("Montana (US State)","").replace("Suriname","").replace("Myanmar","").replace("Kansas (US state)","").replace("Kenya","").replace("Niger","").replace("Rwanda","").replace("Tanzania","").replace("Utah (US state)","").replace("Wisconsin (US State)","").replace("Syria","").replace("Alaska (US state)","").replace("Romania","").replace("Gabon","").replace("Belize","").replace("Belgium","").replace("Oman","").replace("Alabama (US state)","").replace("Ireland","").replace("Mali","").replace("Luxembourg","").replace("Papua New Guinea","").replace("Guinea-issau","").replace("Liberia","").replace("Moldova","").replace("Sudan","").replace("Iraq","").replace("Solomon Islands","").replace("Michigan (US State)","").replace("Dominica","").replace("Florida (US state)","").replace("Estonia","").replace("DominicanRepublic","").replace("Senegal","").replace("Slovakia","").replace("Madagascar","").replace("Vermont (US State)","").replace("Ecuador","").replace("Philippines","").replace("Cuba","").replace("Malta","").replace("Finland","").replace("Netherlands","").replace("Maryland (US state)","").replace("Privacy Overview","").replace("Papua New", "").replace("-Bissau", "").replace("n Republic", ""))
+
+for i,o in zip(x,y):
+    z = {"Country" : i, "Status" : o}
+    d.append(z)
+        
+k = json.dumps(d)
+
+app = Flask(__name__)
+
+@app.route("/")
+def scrap ():
+    return k
+
+if __name__ == "__main__":
+    app.run(debug=True)
